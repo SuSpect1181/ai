@@ -1,0 +1,222 @@
+1)Write a program to print multiplication table for given no
+a=int(input(&quot;enter table number&quot;))
+b=int(input(&quot;enter the number to which table is to printed&quot;))
+i=1
+while i&lt;=b:
+    print(a,&quot;x&quot;,i,&quot;=&quot;,a*i)
+    i=i+1
+
+2) Write a program to check wheather the given number is prime or not
+n=input(&#39;Enter the number you want to check: &#39;)
+try:
+    n=int(n)
+except:
+    print(&#39;Wrong input.&#39;)
+    quit()
+if n==1 or n==0:
+    print(&#39;This is neither prime nor composite&#39;)
+else:
+    c=0
+    for i in range(2,n):
+        if n%i==0:
+            c=c+1
+    if c==0:
+        print(&quot;This is a prime number&quot;)
+    else:
+        print(&#39;This  is a composite number.&#39;)
+
+3) Write a program to find factorial of given number
+num = int(input(&quot;Enter a number: &quot;))
+factorial = 1
+if num &lt; 0:
+   print(&quot;Sorry, factorial does not exist for negative numbers&quot;)
+elif num == 0:
+   print(&quot;The factorial of 0 is 1&quot;)
+else:
+   for i in range(1,num + 1):
+       factorial = factorial*i
+   print(&quot;The factorial of&quot;,num,&quot;is&quot;,factorial)
+
+4)Write a program to perform different set operations in python
+E = {0, 2, 4, 6, 8};
+N = {1, 2, 3, 4, 5};
+print(&quot;Union of E and N is&quot;,E | N)
+print(&quot;Intersection of E and N is&quot;,E &amp; N)
+print(&quot;Difference of E and N is&quot;,E - N)
+print(&quot;Symmetric difference of E and N is&quot;,E ^ N)
+
+5)BFS
+from collections import defaultdict
+class Graph:
+
+    def __init__(self):
+ 
+       
+        self.graph = defaultdict(list)
+ 
+   
+    def addEdge(self,u,v):
+        self.graph[u].append(v)
+ 
+
+    def BFS(self, s):
+ 
+        visited = [False] * (max(self.graph) + 1)
+ 
+        queue = []
+ 
+        queue.append(s)
+        visited[s] = True
+ 
+        while queue:
+ 
+            s = queue.pop(0)
+            print (s, end = &quot; &quot;)
+ 
+            for i in self.graph[s]:
+                if visited[i] == False:
+                    queue.append(i)
+                    visited[i] = True
+ 
+g = Graph()
+g.addEdge(0, 1)
+g.addEdge(0, 2)
+g.addEdge(1, 2)
+g.addEdge(2, 0)
+g.addEdge(2, 3)
+g.addEdge(3, 3)
+ 
+print (&quot;Following is Breadth First Traversal&quot;
+                  &quot; (starting from vertex 2)&quot;)
+g.BFS(2)
+
+6)DFS
+from collections import defaultdict
+class Graph:
+ 
+    def __init__(self):
+ 
+        self.graph = defaultdict(list)
+ 
+    def addEdge(self, u, v):
+        self.graph[u].append(v)
+ 
+    def DFSUtil(self, v, visited):
+ 
+        visited.add(v)
+        print(v, end=&#39; &#39;)
+ 
+        for neighbour in self.graph[v]:
+            if neighbour not in visited:
+                self.DFSUtil(neighbour, visited)
+ 
+    def DFS(self, v):
+ 
+        visited = set()
+ 
+        self.DFSUtil(v, visited)
+ 
+g = Graph()
+g.addEdge(0, 1)
+
+Water Jug Problem
+g.addEdge(0, 2)
+g.addEdge(1, 2)
+g.addEdge(2, 0)
+g.addEdge(2, 3)
+g.addEdge(3, 3)
+ 
+print(&quot;Following is DFS from (starting from vertex 2)&quot;)
+g.DFS(2)
+
+7)Water Jug
+from collections import defaultdict
+  
+jug1, jug2, aim = 4, 3, 2
+  
+visited = defaultdict(lambda: False)
+
+def waterJugSolver(amt1, amt2): 
+
+    if (amt1 == aim and amt2 == 0) or (amt2 == aim and amt1 == 0):
+        print (amt1, amt2)
+        return True
+
+    if visited[(amt1, amt2)] == False:
+        print(amt1, amt2)
+        visited[(amt1, amt2)] = True
+      
+        return (waterJugSolver(0, amt2) or
+                waterJugSolver(amt1, 0) or
+                waterJugSolver(jug1, amt2) or
+                waterJugSolver(amt1, jug2) or
+                waterJugSolver(amt1 + min(amt2, (jug1-amt1)),
+                amt2 - min(amt2, (jug1-amt1))) or
+                waterJugSolver(amt1 - min(amt1, (jug2-amt2)),
+                amt2 + min(amt1, (jug2-amt2))))
+
+    else:
+        return False
+  
+print(&quot;Steps: &quot;)
+
+waterJugSolver(0, 0)
+
+8)KNN Algo
+import math
+  
+def classifyAPoint(points,p,k=3):
+    &#39;&#39;&#39;
+     This function finds the classification of p using
+     k nearest neighbor algorithm. It assumes only two
+     groups and returns 0 if p belongs to group 0, else
+      1 (belongs to group 1).
+  
+      Parameters - 
+          points: Dictionary of training points having two keys - 0 and 1
+                   Each key have a list of training data points belong to
+that 
+  
+          p : A tuple, test data point of the form (x,y)
+  
+          k : number of nearest neighbour to consider, default is 3 
+    &#39;&#39;&#39;
+  
+    distance=[]
+    for group in points:
+        for feature in points[group]:
+ 
+            euclidean_distance = math.sqrt((feature[0]-p[0])**2
++(feature[1]-p[1])**2)
+  
+            distance.append((euclidean_distance,group))
+
+    distance = sorted(distance)[:k]
+  
+    freq1 = 0 #frequency of group 0
+    freq2 = 0 #frequency og group 1
+  
+    for d in distance:
+        if d[1] == 0:
+            freq1 += 1
+        elif d[1] == 1:
+            freq2 += 1
+  
+    return 0 if freq1&gt;freq2 else 1
+
+def main():
+
+  
+    points = {0:[(1,12),(2,5),(3,6),(3,10),(3.5,8),(2,11),(2,9),(1,7)],
+              1:[(5,3),(3,2),(1.5,9),(7,2),(6,1),(3.8,1),(5.6,4),(4,2),(2,5)
+]}
+
+    p = (2.5,7)
+ 
+    k = 3
+  
+    print(&quot;The value classified to unknown point is: {}&quot;.\
+          format(classifyAPoint(points,p,k)))
+  
+if __name__ == &#39;__main__&#39;:
+    main()
